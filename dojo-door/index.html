@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10211e">
+<title>玄成宮・開殿門</title>
+<link rel="stylesheet" href="gathering.css">
+</head>
+<body class="welcome">
+<header class="door-header"><span class="seal">玄</span><span>玄成宮<small>線上道場 · 開殿門</small></span></header>
+<section id="welcome-card">
+<div class="door">
+<p class="door-kicker">玄成宮 · 每日開殿</p>
+<h2 id="gathering-title">今晚八點，一起點一盞燈。</h2>
+<p id="gathering-when">每天台北時間 20:00–20:20</p>
+<div class="door-counts">
+<p><b id="gathering-online">—</b><span>此刻殿內真人</span></p>
+<p><b id="gathering-confirmed">—</b><span>本場已確認</span></p>
+</div>
+<div id="gathering-lamp" class="gathering-lamp" aria-hidden="true"></div>
+<p id="gathering-preview" hidden>練習場。請開兩個分頁，各按一次。這不算正式開殿。</p>
+<p id="gathering-state" role="status">正在讀取開殿時間。</p>
+<button id="gathering-join" type="button">我在，一起點燈</button>
+<p class="lite-note">公開站還沒換上這面門。進入殿堂會打開現在的公開遊戲，那裡仍是舊的迎賓卡。</p>
+<a id="enter-hall" href="https://xuancheng-changsheng-playtest.gannena.chatgpt.site/temple/">進入目前的公開殿堂</a>
+<a id="lite-visit" href="?gathering=preview">在這裡試點練習燈</a>
+</div>
+</section>
+<script type="module" src="gathering-door.mjs"></script>
+</body>
+</html>
