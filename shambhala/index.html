@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="notranslate" translate="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google" content="notranslate">
+  <title>Shambhala 2451 — The City Below the War</title>
+  <link rel="stylesheet" href="css/film.css">
+</head>
+<body>
+  <header class="mast">
+    <p class="zh">這是一部虛構的十二集英文模擬紀錄片，不是歷史，也不是任何國家的作戰紀錄。時間從地球曆 2451 年到 2571 年，每一集的時間軸是 30 分鐘。播放器裡的城市會自己過日子；英文字幕可以下載成 SRT。上傳 YouTube 時請附上這個英文字幕檔，並開啟自動翻譯，觀眾就能改看自己的語言。畫面上燒進去的英文，YouTube 不會翻譯。若要乾淨畫面，請關掉「把英文字幕畫在畫面上」，並勾選錄製模式。1 倍速才是三十分鐘的正片；10 倍與 60 倍是預覽。</p>
+    <h1>Shambhala <span>2451</span></h1>
+    <p class="kicker">The City Below the War</p>
+  </header>
+
+  <div class="stage" id="stage">
+    <canvas id="film" width="1280" height="720" aria-label="Shambhala cross-section"></canvas>
+    <div id="live" class="sr-only" aria-live="polite"></div>
+  </div>
+
+  <div class="transport">
+    <button id="play" type="button">播放</button>
+    <button id="prev" type="button">上一章</button>
+    <button id="next" type="button">下一章</button>
+    <label>速度
+      <select id="speed">
+        <option value="1">1× · 30 分鐘</option>
+        <option value="10">10× · 3 分鐘</option>
+        <option value="60">60× · 30 秒</option>
+      </select>
+    </label>
+    <span id="time">0:00 / 30:00</span>
+    <div class="scrub">
+      <input id="scrub" type="range" min="0" max="1800" value="0" aria-label="時間軸">
+    </div>
+    <div class="checks">
+      <label><input id="speak" type="checkbox"> 朗讀英文旁白（1 倍速）</label>
+      <label><input id="burn" type="checkbox" checked> 把英文字幕畫在畫面上</label>
+      <label><input id="chrome" type="checkbox"> 錄製模式（只留畫面）</label>
+      <button id="srt" type="button">下載英文 SRT</button>
+      <button id="chapters" type="button">下載章節時間</button>
+      <button id="copy" type="button">複製 YouTube 說明</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <ol class="episode-list" id="episode-list"></ol>
+    <section class="notes">
+      <h2 id="episode-heading">第 1 集</h2>
+      <pre id="blurb"></pre>
+    </section>
+  </div>
+  <p class="foot">空白鍵播放或暫停。左右方向鍵跳章。每一章三分鐘，一集十章。英文字幕只在每一章開頭停留，兩段旁白之間，城市自己繼續生活。</p>
+  <script type="module" src="js/film.js"></script>
+</body>
+</html>
