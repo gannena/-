@@ -25,15 +25,17 @@ export function drawFrame(ctx, viewW, viewH, frame) {
   ctx.fillStyle = "#120f0c";
   ctx.fillRect(0, 0, viewW, viewH);
   if (frame.split) {
-    withView(ctx, 0, 0, viewW / 2, viewH, () => drawScene(ctx, frame.leftWorld, frame.time, { quiet: true }));
-    withView(ctx, viewW / 2, 0, viewW / 2, viewH, () => drawScene(ctx, frame.world, frame.time, { quiet: true }));
+    const motion = frame.motion ?? frame.time;
+    withView(ctx, 0, 0, viewW / 2, viewH, () => drawScene(ctx, frame.leftWorld, motion, { quiet: true }));
+    withView(ctx, viewW / 2, 0, viewW / 2, viewH, () => drawScene(ctx, frame.world, motion, { quiet: true }));
     ctx.fillStyle = "#f0c14a";
     ctx.fillRect(viewW / 2 - 3, 0, 6, viewH);
     drawYearPlate(ctx, "YEAR 2451", 36, viewH - 78, 1);
     drawYearPlate(ctx, "YEAR 2571", viewW / 2 + 36, viewH - 78, 1);
   } else {
-    const band = frame.showText ? 96 : 0;
-    withView(ctx, 0, 0, viewW, viewH - band, () => drawScene(ctx, frame.world, frame.time, { quiet: false }));
+    const band = frame.showText && !frame.fullBleed ? 96 : 0;
+    const motion = frame.motion ?? frame.time;
+    withView(ctx, 0, 0, viewW, viewH - band, () => drawScene(ctx, frame.world, motion, { quiet: false }));
     drawYearPlate(ctx, `YEAR ${Math.floor(frame.world.year)}`, 22, 64, 0.64);
   }
   if (frame.showText) drawOverlays(ctx, viewW, viewH, frame);

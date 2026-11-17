@@ -28,11 +28,14 @@ body.recording .foot {
 
 body.recording {
   background: #000;
+  overflow: hidden;
 }
 
 body.recording .stage {
   width: 100vw;
+  height: 100vh;
   max-width: none;
+  aspect-ratio: auto;
   margin: 0;
   border: 0;
   border-radius: 0;

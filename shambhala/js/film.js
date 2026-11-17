@@ -18,9 +18,19 @@ const blurb = document.querySelector("#blurb");
 const episodeHeading = document.querySelector("#episode-heading");
 
 const params = new URLSearchParams(location.search);
+const reel = params.has("reel");
+const REEL = [
+  { e: 1, t: 0, hold: 12 },
+  { e: 1, t: 540, hold: 14 },
+  { e: 6, t: 900, hold: 14 },
+  { e: 10, t: 720, hold: 14 },
+  { e: 11, t: 900, hold: 14 },
+  { e: 12, t: 1260, hold: 16 },
+];
 let episode = episodeByNumber(Number(params.get("e")) || 1);
-let time = clampTime(Number(params.get("t")) || 0);
-let playing = false;
+let time = clampTime(params.has("t") ? Number(params.get("t")) : reel ? 0 : 540);
+let playing = !reel && !params.has("shot");
+let reelBegan = 0;
 let speed = 1;
 let lastTick = performance.now();
 let spokenIndex = -1;
@@ -74,6 +84,14 @@ window.addEventListener("keydown", (event) => {
   }
 });
 
+if (reel) {
+  captionBox.checked = true;
+  chromeBox.checked = true;
+  document.body.classList.add("recording");
+  episode = episodeByNumber(1);
+  time = 0;
+}
+
 window.addEventListener("resize", resize);
 resize();
 render();
@@ -89,7 +107,10 @@ if (params.has("shot")) {
 function tick(now) {
   const delta = Math.min(0.1, (now - lastTick) / 1000);
   lastTick = now;
-  if (playing) {
+  if (reel) {
+    if (!reelBegan) reelBegan = now;
+    applyReel((now - reelBegan) / 1000);
+  } else if (playing) {
     time += delta * speed;
     if (time >= EPISODE_SECONDS) {
       time = EPISODE_SECONDS;
@@ -125,6 +146,8 @@ function render() {
     leftWorld,
     split,
     time,
+    motion: performance.now() / 1000,
+    fullBleed: reel,
     showText: captionBox.checked,
     titleCard: time < 8,
     episodeTitle: episode.title,
@@ -152,6 +175,21 @@ function render() {
     url.searchParams.set("t", String(Math.floor(time)));
     history.replaceState(null, "", url);
   }
+}
+
+function applyReel(elapsed) {
+  let remain = Math.max(0, elapsed - 0.6);
+  for (const segment of REEL) {
+    if (remain <= segment.hold) {
+      episode = episodeByNumber(segment.e);
+      time = segment.t + remain * 0.3;
+      return;
+    }
+    remain -= segment.hold;
+  }
+  const last = REEL[REEL.length - 1];
+  episode = episodeByNumber(last.e);
+  time = last.t + 8;
 }
 
 function toggle() {
